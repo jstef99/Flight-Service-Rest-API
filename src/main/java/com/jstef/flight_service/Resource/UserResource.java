@@ -6,12 +6,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-@Path("/api/flights")
+@Path("/api/users")
 @RestController
-public class FlightResource {
+public class UserResource {
     @GET
     @Produces("application/json")
-    public String getFlights(){
+    public String getUsers(){
         return null;
     }
 }
