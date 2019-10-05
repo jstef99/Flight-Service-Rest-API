@@ -14,11 +14,15 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
     private int id;
     private String firstName;
     private String lastName;
+    @Column(name="user_email")
     private String email;
+    @Column(name="user_login")
     private String login;
+    @Column(name="user_password")
     private String password;
     @OneToMany(mappedBy = "owner")
     private List<Registration> reservations;

@@ -1,5 +1,6 @@
 package com.jstef.flight_service.Service;
 
+import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
 import com.jstef.flight_service.Exception.FlightNotFoundException;
 import com.jstef.flight_service.Repository.FlightRepository;
@@ -7,20 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public List<Flight> findByDeparturePlaceAndDestinationAndDepartureTime(String departurePlace, String destination, String departureTime) {
-        return flightRepository.findByDeparturePlaceAndDestinationAndDepartureTime(departurePlace, destination, departureTime);
+
+    public List<Flight> findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(Airport departurePlace, Airport destination, Date departureTime) {
+        return flightRepository.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(departureTime, departurePlace, destination);
     }
 
     public Flight findById(int flightId) {
          return flightRepository.findById(flightId).orElseThrow(()->new FlightNotFoundException("Cannot find flight with id="+flightId));
+    }
+
+    public List<Flight> findAll() {
+        return flightRepository.findAll();
+    }
+
+    public void save(Flight flight){
+        flightRepository.save(flight);
     }
 }

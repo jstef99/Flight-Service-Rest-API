@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
@@ -30,7 +31,6 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder encoder;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByLogin(userName);
         if (user == null) {
@@ -43,15 +43,18 @@ public class UserService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
-    @Transactional
+
     public User findByUsername(String userName) {
         return userRepository.findByLogin(userName);
     }
 
-    @Transactional
     public void saveNewUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER"),roleService.findByName("ROLE_ADMIN")));
+        userRepository.save(user);
+    }
+
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 }

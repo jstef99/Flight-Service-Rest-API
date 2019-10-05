@@ -3,11 +3,16 @@ package com.jstef.flight_service.Controller;
 import com.jstef.flight_service.Entity.User;
 import com.jstef.flight_service.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -44,6 +49,19 @@ public class AuthenticationController {
             return "register_form";
         }
         service.saveNewUser(user);
+        return "redirect:/login";
+    }
+    @PostMapping("/logout")
+    public String logoutDo(HttpServletRequest request, HttpServletResponse response){
+        HttpSession session= request.getSession(false);
+        SecurityContextHolder.clearContext();
+        session= request.getSession(false);
+        if(session != null) {
+            session.invalidate();
+        }
+        for(Cookie cookie : request.getCookies()) {
+            cookie.setMaxAge(0);
+        }
         return "redirect:/login";
     }
 }

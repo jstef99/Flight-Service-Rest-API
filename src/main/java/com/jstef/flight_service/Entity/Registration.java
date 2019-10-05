@@ -12,7 +12,7 @@ public class Registration {
     @Id
     private int id;
     @ManyToOne
-    @JoinColumn(name="owner_id")
+    @JoinColumn(name="user_id")
     private User owner;
     @ManyToOne
     @JoinColumn(name="flight_id")
@@ -21,6 +21,7 @@ public class Registration {
     private int adults;
 
     private int children;
+    @Column(name="registration_status")
     private String status;
 
     public Registration(){
