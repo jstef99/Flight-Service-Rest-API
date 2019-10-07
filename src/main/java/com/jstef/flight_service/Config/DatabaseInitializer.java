@@ -7,12 +7,14 @@ import com.jstef.flight_service.Service.AirportService;
 import com.jstef.flight_service.Service.FlightService;
 import com.jstef.flight_service.Service.RoleService;
 import net.bytebuddy.asm.Advice;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
@@ -33,13 +35,17 @@ public class DatabaseInitializer implements CommandLineRunner {
         if(roleService.findByName("ROLE_ADMIN")==null){
             roleService.save(new Role("ROLE_ADMIN"));
         }
+        if(airportService.findByAirportName("Kato")==null){
+            airportService.save(new Airport("Poland","Kato"));
+        }
         if(airportService.findByAirportName("War")==null){
             airportService.save(new Airport("Poland","War"));
         }
-        if(flightService.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination
-                (new Airport("Poland","Kato"),new Airport("Poland","Wwwa")
-                        ,new SimpleDateFormat("yyyy-MM-dd").parse("2018-01-01"))==null){
-            flightService.save(new Flight());
+        Flight flight = flightService.findById(1);
+        if(flightService.findById(1)==null) {
+            flight = new Flight(airportService.findByAirportName("Kato"),airportService.findByAirportName("War"),
+                    DateTime.parse("2019-01-01T08:00:00.618-00:00"),  DateTime.parse("2019-01-01T12:30:00.618-00:00"),100);
+            flightService.save(flight);
         }
     }
 }

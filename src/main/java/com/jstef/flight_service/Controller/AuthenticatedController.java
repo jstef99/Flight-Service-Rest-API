@@ -4,9 +4,12 @@ import com.jstef.flight_service.Entity.Flight;
 import com.jstef.flight_service.Entity.Registration;
 import com.jstef.flight_service.Entity.Role;
 import com.jstef.flight_service.Entity.User;
+import com.jstef.flight_service.Helper.FlightBrowse;
+import com.jstef.flight_service.Service.AirportService;
 import com.jstef.flight_service.Service.FlightService;
 import com.jstef.flight_service.Service.UserService;
 import org.glassfish.hk2.api.messaging.Topic;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,6 +39,9 @@ public class AuthenticatedController {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private AirportService airportService;
 
     @GetMapping("/")
     public String homePage(){
@@ -48,15 +57,28 @@ public class AuthenticatedController {
 
     @GetMapping("/browse")
     public String browseFlights(Model model){
-        model.addAttribute("flight",new Flight());
+        model.addAttribute("flight",new FlightBrowse());
+        System.out.println("adding to model");
         return "flightBrowser_form";
     }
 
     @PostMapping("/browse")
-    public String browseFlightsByCriteria(@ModelAttribute("flight") Flight flight, Model model){
-        List<Flight>results=flightService.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(flight.getDeparturePlace(),flight.getDestination(),flight.getDepartureTime());
-        model.addAttribute("results",results);
-        return "flightBrowser_result";
+    public String browseFlightsByCriteria(@ModelAttribute("flight") FlightBrowse flightBrowseObject, Model model) throws ParseException {
+        if (flightBrowseObject == null) {
+            System.out.println("IS NULL");
+            return "redirect:/home";
+        }
+        try {
+            List<Flight> results = flightService.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(
+                    airportService.findByAirportName(flightBrowseObject.getDeparturePlace()),
+                    airportService.findByAirportName(flightBrowseObject.getDestination()),
+                    DateTime.parse(flightBrowseObject.getDepartureTime()+"T08:00:00.618-00:00").toDate());
+            model.addAttribute("results", results);
+            return "flightBrowser_result";
+        } catch (Exception e) {
+            return "flightBrowser_form";
+        }
+
     }
 
     @GetMapping("/user/change_password")

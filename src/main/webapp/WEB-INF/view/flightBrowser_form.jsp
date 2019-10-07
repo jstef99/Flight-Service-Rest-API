@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <body>
@@ -8,7 +9,7 @@
     <br>
     <form:input type="text" path="destination" placeholder="To"/>
     <br>
-    <form:input type="date" path="departureTime" placeholder="Date"/>
+    <form:input type="text" path="departureTime" placeholder="Date"/>
     <button type="submit">Search for flight</button>
 </form:form>
 </body>

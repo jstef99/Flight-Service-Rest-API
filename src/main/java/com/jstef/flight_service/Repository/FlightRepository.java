@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight,Integer> {
     @Query("select a from Flight a where a.departureTime >= :departureTime and a.departurePlace=:departurePlace and a.destination=:destination")
-    List<Flight> findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(@Param("departureTime") Date departureTime,
+    List<Flight> findAllWithDepartureTimeAndDeparturePlaceAndDestination(@Param("departureTime") Date departureTime,
                                                                               @Param("departurePlace") Airport departurePlace,
                                                                               @Param("destination") Airport destination);
 }

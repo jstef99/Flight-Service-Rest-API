@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name="registrations")
 public class Registration {
     @Id
+    @Column(name="registration_id")
     private int id;
     @ManyToOne
     @JoinColumn(name="user_id")

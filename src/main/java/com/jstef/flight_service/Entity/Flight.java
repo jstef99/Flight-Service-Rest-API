@@ -1,6 +1,9 @@
 package com.jstef.flight_service.Entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -18,12 +21,13 @@ import java.util.Locale;
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="flight_id")
     private int id;
     @ManyToOne
-    @JoinColumn(name="departures")
+    @JoinColumn(name="departure_airport_id")
     private Airport departurePlace;
     @ManyToOne
-    @JoinColumn(name="destinations")
+    @JoinColumn(name="destination_airport_id")
     private Airport destination;
     private int duration;
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
@@ -32,22 +36,20 @@ public class Flight {
     private Date arrivalTime;
     private int maxPassengers;
     private int currPassengers;
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flight")
     private List<Registration> registrations;
 
     public Flight(){
         currPassengers=0;
     }
-    public Flight(Airport departurePlace, Airport destination, int duration, Date departureTime, Date arrivalTime,int maxPassengers) throws ParseException {
+    public Flight(Airport departurePlace, Airport destination, DateTime departureTime, DateTime arrivalTime, int maxPassengers) throws ParseException {
         currPassengers=0;
         this.departurePlace=departurePlace;
         this.destination=destination;
-        this.departureTime=departureTime;
-        this.arrivalTime=arrivalTime;
+        this.departureTime=departureTime.toDate();
+        this.arrivalTime=arrivalTime.toDate();
         this.maxPassengers=maxPassengers;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date firstDate = sdf.parse(arrivalTime.toString());
-        Date secondDate = sdf.parse(departureTime.toString());
-        this.duration = (int)Math.abs(secondDate.getTime() - firstDate.getTime());
+        Seconds diff = Seconds.secondsBetween(departureTime,arrivalTime);
+        this.duration = diff.getSeconds()/60;
     }
 }

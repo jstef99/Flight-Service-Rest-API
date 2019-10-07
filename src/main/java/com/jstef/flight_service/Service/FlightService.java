@@ -22,11 +22,13 @@ public class FlightService {
 
 
     public List<Flight> findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(Airport departurePlace, Airport destination, Date departureTime) {
-        return flightRepository.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(departureTime, departurePlace, destination);
+        System.out.println("looking for flight with departurePlace="+departurePlace.getAirportName()+
+                ", destination="+destination.getAirportName()+" and departureTime="+departureTime);
+        return flightRepository.findAllWithDepartureTimeAndDeparturePlaceAndDestination(departureTime, departurePlace, destination);
     }
 
     public Flight findById(int flightId) {
-         return flightRepository.findById(flightId).orElseThrow(()->new FlightNotFoundException("Cannot find flight with id="+flightId));
+         return flightRepository.findById(flightId).orElse(null);
     }
 
     public List<Flight> findAll() {
