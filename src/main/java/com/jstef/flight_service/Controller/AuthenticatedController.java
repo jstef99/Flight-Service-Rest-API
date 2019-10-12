@@ -58,27 +58,25 @@ public class AuthenticatedController {
     @GetMapping("/browse")
     public String browseFlights(Model model){
         model.addAttribute("flight",new FlightBrowse());
-        System.out.println("adding to model");
         return "flightBrowser_form";
     }
 
     @PostMapping("/browse")
     public String browseFlightsByCriteria(@ModelAttribute("flight") FlightBrowse flightBrowseObject, Model model) throws ParseException {
         if (flightBrowseObject == null) {
-            System.out.println("IS NULL");
             return "redirect:/home";
         }
+        System.out.println(flightBrowseObject.getDepartureTime());
         try {
             List<Flight> results = flightService.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(
                     airportService.findByAirportName(flightBrowseObject.getDeparturePlace()),
                     airportService.findByAirportName(flightBrowseObject.getDestination()),
-                    DateTime.parse(flightBrowseObject.getDepartureTime()+"T08:00:00.618-00:00").toDate());
+                    DateTime.parse(flightBrowseObject.getDepartureTime()).toDate());
             model.addAttribute("results", results);
             return "flightBrowser_result";
         } catch (Exception e) {
             return "flightBrowser_form";
         }
-
     }
 
     @GetMapping("/user/change_password")

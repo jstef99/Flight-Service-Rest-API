@@ -14,8 +14,8 @@
     </tr>
     <c:forEach items="${results}" var="result">
         <tr>
-            <td><c:out value="${result.departurePlace}"/></td>
-            <td><c:out value="${result.destination}"/></td>
+            <td><c:out value="${result.departurePlace.airportName}"/></td>
+            <td><c:out value="${result.destination.airportName}"/></td>
             <td><c:out value="${result.departureTime}"/></td>
             <td><c:out value="${result.arrivalTime}"/></td>
             <td><c:out value="${result.currPassengers} / ${result.maxPassengers}"/></td>
