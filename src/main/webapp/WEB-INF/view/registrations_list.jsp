@@ -10,18 +10,24 @@
         <th>To</th>
         <th>Deaparture time</th>
         <th>Arrival time</th>
-        <th>Current passengers</th>
+        <th>Adults</th>
+        <th>Children</th>
+        <th>Total cost</th>
         <th>Status</th>
+        <th>Action</th>
     </tr>
     <c:forEach items="${reservations}" var="reservation">
         <tr>
             <td><c:out value="${reservation.id}"/></td>
-            <td><c:out value="${reservation.departurePlace}"/></td>
-            <td><c:out value="${reservation.destination}"/></td>
-            <td><c:out value="${reservation.departureTime}"/></td>
-            <td><c:out value="${reservation.arrivalTime}"/></td>
-            <td><c:out value="${reservation.currPassengers} / ${result.maxPassengers}"/></td>
+            <td><c:out value="${reservation.flight.departurePlace.airportName}"/></td>
+            <td><c:out value="${reservation.flight.destination.airportName}"/></td>
+            <td><c:out value="${reservation.flight.departureTime}"/></td>
+            <td><c:out value="${reservation.flight.arrivalTime}"/></td>
+            <td><c:out value="${reservation.adults}"/></td>
+            <td><c:out value="${reservation.children}"/></td>
+            <td><c:out value="${reservation.total}"/></td>
             <td><c:out value="${reservation.status}"/></td>
+            <td><a href="/">Finalize</a></td>
         </tr>
     </c:forEach>
 </table>

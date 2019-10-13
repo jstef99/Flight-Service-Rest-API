@@ -38,6 +38,10 @@ public class Flight {
     private int currPassengers;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "flight")
     private List<Registration> registrations;
+    @Column(name="normal_ticket_price")
+    private float nPrice;
+    @Column(name="discounted_ticket_price")
+    private float dPrice;
 
     public Flight(){
         currPassengers=0;

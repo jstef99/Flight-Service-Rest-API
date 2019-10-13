@@ -10,7 +10,8 @@
         <th>Deaparture time</th>
         <th>Arrival time</th>
         <th>Current passengers</th>
-        <th>Additional</th>
+        <th>Action</th>
+        <th>Additional info</th>
     </tr>
     <c:forEach items="${results}" var="result">
         <tr>
@@ -19,7 +20,8 @@
             <td><c:out value="${result.departureTime}"/></td>
             <td><c:out value="${result.arrivalTime}"/></td>
             <td><c:out value="${result.currPassengers} / ${result.maxPassengers}"/></td>
-            <td><a href="/flight_info/${result.id}">More information</a></td>
+            <td><a href="/flight/buy_ticket/${result.id}">Buy a ticket</a></td>
+            <td><a href="/flight/info/${result.id}">More information</a></td>
         </tr>
     </c:forEach>
 </table>

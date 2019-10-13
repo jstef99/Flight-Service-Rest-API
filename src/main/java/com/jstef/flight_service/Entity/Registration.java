@@ -25,7 +25,18 @@ public class Registration {
     @Column(name="registration_status")
     private String status;
 
+    private float total;
+
     public Registration(){
 
+    }
+
+    public Registration(int adults, int children, float total, User owner, Flight flight){
+        this.status="pending";
+        this.adults=adults;
+        this.children=children;
+        this.total=total;
+        this.owner=owner;
+        this.flight=flight;
     }
 }

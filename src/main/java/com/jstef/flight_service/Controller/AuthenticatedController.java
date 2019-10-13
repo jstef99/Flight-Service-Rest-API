@@ -55,30 +55,6 @@ public class AuthenticatedController {
         return "profile_page";
     }
 
-    @GetMapping("/browse")
-    public String browseFlights(Model model){
-        model.addAttribute("flight",new FlightBrowse());
-        return "flightBrowser_form";
-    }
-
-    @PostMapping("/browse")
-    public String browseFlightsByCriteria(@ModelAttribute("flight") FlightBrowse flightBrowseObject, Model model) throws ParseException {
-        if (flightBrowseObject == null) {
-            return "redirect:/home";
-        }
-        System.out.println(flightBrowseObject.getDepartureTime());
-        try {
-            List<Flight> results = flightService.findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(
-                    airportService.findByAirportName(flightBrowseObject.getDeparturePlace()),
-                    airportService.findByAirportName(flightBrowseObject.getDestination()),
-                    DateTime.parse(flightBrowseObject.getDepartureTime()).toDate());
-            model.addAttribute("results", results);
-            return "flightBrowser_result";
-        } catch (Exception e) {
-            return "flightBrowser_form";
-        }
-    }
-
     @GetMapping("/user/change_password")
     public String changePassword(Principal principal, HttpServletRequest request,Model model){
         String name = principal.getName();

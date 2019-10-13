@@ -22,8 +22,6 @@ public class FlightService {
 
 
     public List<Flight> findAllWithDepartureTimeAfterAndDeparturePlaceAndDestination(Airport departurePlace, Airport destination, Date departureTime) {
-        System.out.println("looking for flight with departurePlace="+departurePlace.getAirportName()+
-                ", destination="+destination.getAirportName()+" and departureTime="+departureTime);
         return flightRepository.findAllWithDepartureTimeAndDeparturePlaceAndDestination(departureTime, departurePlace, destination);
     }
 

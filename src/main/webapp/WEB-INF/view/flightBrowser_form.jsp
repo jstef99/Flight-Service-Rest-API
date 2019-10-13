@@ -4,12 +4,12 @@
 <html>
 <body>
 <%--@elvariable id="flight" type=""--%>
-<form:form action="/browse" method="post" modelAttribute="flight">
+<form:form action="/browse/flights" method="post" modelAttribute="flight">
     <form:input type="text" path="departurePlace" placeholder="From"/>
     <br>
     <form:input type="text" path="destination" placeholder="To"/>
     <br>
-    <form:input type="text" path="departureTime" placeholder="Date"/>
+    <form:input type="text" path="departureTime" placeholder="yyyy-MM-dd"/>
     <button type="submit">Search for flight</button>
 </form:form>
 </body>

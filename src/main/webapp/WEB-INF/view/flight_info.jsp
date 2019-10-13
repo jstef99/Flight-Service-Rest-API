@@ -7,9 +7,9 @@
     <form:form modelAttribute="flight">
         Flight ID: <c:out value="${flight.id}"/>
         <br>
-        From: <c:out value="${flight.departurePlace}"/>
+        From: <c:out value="${flight.departurePlace.airportName},${flight.departurePlace.country}"/>
         <br>
-        To: <c:out value="${flight.destination}"/>
+        To: <c:out value="${flight.destination.airportName},${flight.departurePlace.country}"/>
         <br>
         Departure time: <c:out value="${flight.departureTime}"/>
         <br>

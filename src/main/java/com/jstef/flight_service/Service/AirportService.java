@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class AirportService {
@@ -18,5 +20,9 @@ public class AirportService {
 
     public Airport findByAirportName(String name){
         return airportRepository.findByAirportName(name);
+    }
+
+    public List<Airport> findAll() {
+        return airportRepository.findAll();
     }
 }
