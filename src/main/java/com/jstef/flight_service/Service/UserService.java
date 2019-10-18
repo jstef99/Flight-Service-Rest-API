@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +57,10 @@ public class UserService implements UserDetailsService {
 
     public void updateUser(User user) {
         userRepository.save(user);
+    }
+
+    public List<User> findAll() {
+        //stub
+        return null;
     }
 }

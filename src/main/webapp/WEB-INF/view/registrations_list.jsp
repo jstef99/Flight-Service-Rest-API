@@ -14,7 +14,7 @@
         <th>Children</th>
         <th>Total cost</th>
         <th>Status</th>
-        <th>Action</th>
+        <th>Manage reservation</th>
     </tr>
     <c:forEach items="${reservations}" var="reservation">
         <tr>
@@ -27,7 +27,7 @@
             <td><c:out value="${reservation.children}"/></td>
             <td><c:out value="${reservation.total}"/></td>
             <td><c:out value="${reservation.status}"/></td>
-            <td><a href="/">Finalize</a></td>
+            <td><a href="/flight/resign/${reservation.id}">Resign</a></td>
         </tr>
     </c:forEach>
 </table>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,5 +17,18 @@ public class RegistrationService {
 
     public void save(Registration registration) {
         registrationRepository.save(registration);
+    }
+
+    public Registration findById(int id) {
+        return registrationRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(int id) {
+        registrationRepository.deleteById(id);
+    }
+
+    public List<Registration> findAll() {
+        //stub
+        return null;
     }
 }

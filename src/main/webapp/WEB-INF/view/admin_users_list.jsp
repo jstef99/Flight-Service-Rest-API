@@ -8,9 +8,9 @@
         <th>Id</th>
         <th>Stub</th>
     </tr>
-    <c:forEach items="${flights}" var="flight">
+    <c:forEach items="${users}" var="user">
         <tr>
-            <td><c:out value="${reservation.id}"/></td>
+            <td><c:out value="${user.id}"/></td>
             <td>Stub</td>
         </tr>
     </c:forEach>

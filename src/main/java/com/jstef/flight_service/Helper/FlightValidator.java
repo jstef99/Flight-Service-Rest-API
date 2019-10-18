@@ -1,6 +1,7 @@
 package com.jstef.flight_service.Helper;
 
 import com.jstef.flight_service.Entity.Flight;
+import com.jstef.flight_service.Entity.User;
 import com.jstef.flight_service.Helper.TicketTransaction;
 
 public class FlightValidator {

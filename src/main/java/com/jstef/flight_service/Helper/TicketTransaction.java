@@ -19,4 +19,6 @@ public class TicketTransaction {
     public float computeTotal() {
         return adults*normalTicketPrice+children*discountTicketPrice;
     }
+
+
 }

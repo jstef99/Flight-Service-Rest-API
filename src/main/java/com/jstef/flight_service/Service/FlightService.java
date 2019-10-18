@@ -2,6 +2,7 @@ package com.jstef.flight_service.Service;
 
 import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
+import com.jstef.flight_service.Entity.Registration;
 import com.jstef.flight_service.Exception.FlightNotFoundException;
 import com.jstef.flight_service.Repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,11 @@ public class FlightService {
 
     public void save(Flight flight){
         flightRepository.save(flight);
+    }
+
+    public void removeRegistration(Registration registration) {
+        Flight flight = findById(registration.getFlight().getId());
+        flight.setCurrPassengers(flight.getCurrPassengers()-registration.getAdults()-registration.getChildren());
+        save(flight);
     }
 }
