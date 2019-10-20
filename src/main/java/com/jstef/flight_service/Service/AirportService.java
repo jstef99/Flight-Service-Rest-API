@@ -25,4 +25,12 @@ public class AirportService {
     public List<Airport> findAll() {
         return airportRepository.findAll();
     }
+
+    public void deleteById(int id) {
+        airportRepository.deleteById(id);
+    }
+
+    public Airport findById(int id) {
+        return airportRepository.findById(id).orElse(null);
+    }
 }

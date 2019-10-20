@@ -51,7 +51,8 @@ public class UserService implements UserDetailsService {
 
     public void saveNewUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER"),roleService.findByName("ROLE_ADMIN")));
+        if(user.getRoles().isEmpty())
+            user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
         userRepository.save(user);
     }
 
@@ -60,7 +61,14 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> findAll() {
-        //stub
-        return null;
+        return userRepository.findAll();
+    }
+
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public User findById(int id) {
+        return userRepository.findById(id).orElse(null);
     }
 }

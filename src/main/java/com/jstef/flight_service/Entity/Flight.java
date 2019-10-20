@@ -46,7 +46,8 @@ public class Flight {
     public Flight(){
         currPassengers=0;
     }
-    public Flight(Airport departurePlace, Airport destination, DateTime departureTime, DateTime arrivalTime, int maxPassengers) throws ParseException {
+    public Flight(Airport departurePlace, Airport destination, DateTime departureTime, DateTime arrivalTime, int maxPassengers,
+                  float nPrice, float dPrice) throws ParseException {
         currPassengers=0;
         this.departurePlace=departurePlace;
         this.destination=destination;

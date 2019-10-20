@@ -64,10 +64,10 @@ public class FlightController {
             registration.setConfirmToken(encoder.encode(registration.getConfirmToken()));
             registrationService.save(registration);
             flight.setCurrPassengers(flight.getCurrPassengers()+transaction.getChildren()+transaction.getAdults());
-            flightService.save(flight);
+            /*flightService.save(flight);
             SimpleMailMessage message = (new MailMessageCreator()).createRegistrationMsg(user,registration,
                     "https://www.somebankservice.com");
-            mailSender.send(message);
+            mailSender.send(message);*/
             model.addAttribute("message",new String("You successfully registered for a flight. Check your email for" +
                     "further information."));
         }

@@ -1,8 +1,6 @@
 package com.jstef.flight_service.Entity;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -34,5 +32,12 @@ public class User {
     private Collection<Role>roles;
     public User(){
 
+    }
+    public User(String firstName, String lastName, String login, String email, String password){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.login=login;
+        this.email=email;
+        this.password=password;
     }
 }

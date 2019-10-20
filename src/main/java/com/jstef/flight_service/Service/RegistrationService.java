@@ -28,7 +28,6 @@ public class RegistrationService {
     }
 
     public List<Registration> findAll() {
-        //stub
-        return null;
+        return registrationRepository.findAll();
     }
 }

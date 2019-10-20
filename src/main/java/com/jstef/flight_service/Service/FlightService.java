@@ -43,4 +43,8 @@ public class FlightService {
         flight.setCurrPassengers(flight.getCurrPassengers()-registration.getAdults()-registration.getChildren());
         save(flight);
     }
+
+    public void deleteById(int id) {
+        flightRepository.deleteById(id);
+    }
 }
