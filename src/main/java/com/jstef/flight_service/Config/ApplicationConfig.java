@@ -1,8 +1,13 @@
 package com.jstef.flight_service.Config;
 
+import com.jstef.flight_service.Resource.AirportResource;
+import com.jstef.flight_service.Resource.FlightResource;
+import com.jstef.flight_service.Resource.RegistrationResource;
+import com.jstef.flight_service.Resource.UserResource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.StandardJarScanner;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -85,6 +90,21 @@ public class ApplicationConfig {
         viewResolver.setSuffix(".jsp");
 
         return viewResolver;
+    }
+
+    @Component
+    public class JerseyConfig extends ResourceConfig {
+        public JerseyConfig() {
+            registerEndpoints();
+        }
+
+        private void registerEndpoints() {
+            register(AirportResource.class);
+            register(FlightResource.class);
+            register(UserResource.class);
+            register(RegistrationResource.class);
+        }
+
     }
 
     @Bean

@@ -16,9 +16,11 @@ public class Registration {
     @Column(name="registration_id")
     private int id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User owner;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="flight_id")
     private Flight flight;
 

@@ -1,5 +1,6 @@
 package com.jstef.flight_service.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,9 +19,11 @@ public class Airport {
 
     private String airportName;
 
+    @JsonIgnore
     @OneToMany(mappedBy="departurePlace")
     private List<Flight> departures;
 
+    @JsonIgnore
     @OneToMany(mappedBy="destination")
     private List<Flight> arrivals;
 

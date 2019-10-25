@@ -1,5 +1,6 @@
 package com.jstef.flight_service.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,11 +21,15 @@ public class User {
     private String email;
     @Column(name="user_login")
     private String login;
+    @JsonIgnore
     @Column(name="user_password")
     private String password;
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Registration> reservations;
+    @JsonIgnore
     private String apiKey;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

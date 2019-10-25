@@ -1,5 +1,6 @@
 package com.jstef.flight_service.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.joda.time.DateTime;
@@ -36,6 +37,7 @@ public class Flight {
     private Date arrivalTime;
     private int maxPassengers;
     private int currPassengers;
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "flight")
     private List<Registration> registrations;
     @Column(name="normal_ticket_price")

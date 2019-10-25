@@ -4,11 +4,15 @@ import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
 import com.jstef.flight_service.Entity.Registration;
 import com.jstef.flight_service.Entity.User;
+import com.jstef.flight_service.Helper.MailMessageCreator;
 import com.jstef.flight_service.Service.AirportService;
 import com.jstef.flight_service.Service.FlightService;
 import com.jstef.flight_service.Service.RegistrationService;
 import com.jstef.flight_service.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,12 @@ public class AdminController {
 
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private JavaMailSender sender;
 
     //admin lists of entities
 
@@ -179,7 +189,9 @@ public class AdminController {
     public String generateKey(@PathVariable("user_id") int id){
         String key = UUID.randomUUID().toString();
         User user = userService.findById(id);
-        user.setApiKey(key);
+        SimpleMailMessage message = new MailMessageCreator().createApiKeyMsg(user,key);
+        sender.send(message);
+        user.setApiKey(encoder.encode(key));
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
