@@ -1,16 +1,9 @@
 package com.jstef.flight_service.Config;
 
-import com.jstef.flight_service.Resource.AirportResource;
-import com.jstef.flight_service.Resource.FlightResource;
-import com.jstef.flight_service.Resource.RegistrationResource;
-import com.jstef.flight_service.Resource.UserResource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.StandardJarScanner;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,26 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 @Configuration
@@ -90,21 +70,6 @@ public class ApplicationConfig {
         viewResolver.setSuffix(".jsp");
 
         return viewResolver;
-    }
-
-    @Component
-    public class JerseyConfig extends ResourceConfig {
-        public JerseyConfig() {
-            registerEndpoints();
-        }
-
-        private void registerEndpoints() {
-            register(AirportResource.class);
-            register(FlightResource.class);
-            register(UserResource.class);
-            register(RegistrationResource.class);
-        }
-
     }
 
     @Bean

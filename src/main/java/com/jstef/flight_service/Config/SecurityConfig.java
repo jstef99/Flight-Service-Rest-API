@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authenticateTheUser")
                 .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
-                .and().exceptionHandling().accessDeniedPage("/access_denied");
+                .and().exceptionHandling().accessDeniedPage("/access_denied").and().csrf().disable();
 
     }
 

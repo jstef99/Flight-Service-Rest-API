@@ -51,4 +51,15 @@ public class Registration {
     public void createConfirmToken() {
         confirmToken = UUID.randomUUID().toString();
     }
+
+    public void copyProperties(Registration registration) {
+        this.id=registration.getId();
+        this.owner=registration.getOwner();
+        this.confirmToken=registration.getConfirmToken();
+        this.children=registration.getChildren();
+        this.adults=registration.getAdults();
+        this.total = registration.getTotal();
+        this.status = registration.getStatus();
+        this.flight=registration.getFlight();
+    }
 }

@@ -51,8 +51,10 @@ public class UserService implements UserDetailsService {
 
     public void saveNewUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        if(user.getRoles().isEmpty())
+        if(user.getRoles()==null || user.getRoles().isEmpty()) {
+            Role role = roleService.findByName("ROLE_USER");
             user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
+        }
         userRepository.save(user);
     }
 

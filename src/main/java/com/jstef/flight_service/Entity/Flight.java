@@ -59,4 +59,15 @@ public class Flight {
         Seconds diff = Seconds.secondsBetween(departureTime,arrivalTime);
         this.duration = diff.getSeconds()/60;
     }
+
+    public void copyProperties(Flight flight) {
+        this.nPrice=flight.getNPrice();
+        this.dPrice=flight.getDPrice();
+        this.currPassengers=flight.getCurrPassengers();
+        this.maxPassengers=flight.getMaxPassengers();
+        this.departureTime=flight.getDepartureTime();
+        this.arrivalTime=flight.getArrivalTime();
+        this.departurePlace=flight.getDeparturePlace();
+        this.destination=flight.getDestination();
+    }
 }

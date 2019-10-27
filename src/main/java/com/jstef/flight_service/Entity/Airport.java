@@ -34,4 +34,12 @@ public class Airport {
         this.airportName=airportName;
         this.country=country;
     }
+
+    public void copyProperties(Airport airport) {
+        this.id=airport.getId();
+        this.country=airport.getCountry();
+        this.airportName=airport.getAirportName();
+        this.departures=airport.getDepartures();
+        this.arrivals=airport.getArrivals();
+    }
 }
