@@ -1,11 +1,14 @@
 package com.jstef.flight_service.Controller;
 
+import com.jstef.flight_service.Assembler.AirportResourceAssembler;
 import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
 import com.jstef.flight_service.Entity.User;
 import com.jstef.flight_service.Service.AirportService;
 import com.jstef.flight_service.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.GET;
@@ -14,6 +17,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController
 @RequestMapping("/api/airports")
@@ -22,16 +28,23 @@ public class AirportResourceController {
     @Autowired
     private AirportService airportService;
 
+    @Autowired
+    private AirportResourceAssembler assembler;
+
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON)
-    public List<Airport> getAirports(){
-        List<Airport> airports = airportService.findAll();
-        return airports;
+    public Resources<Resource<Airport>> getAirports(){
+        List<Resource<Airport>> airports = airportService.findAll().stream()
+                .map(assembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(airports,
+                linkTo(methodOn(AirportResourceController.class).getAirports()).withSelfRel());
     }
 
     @GetMapping(path = "/{airport_id}", produces = MediaType.APPLICATION_JSON)
-    public Airport getAirportById(@PathVariable("airport_id") int airportId){
+    public Resource<Airport> getAirportById(@PathVariable("airport_id") int airportId){
         Airport airport = airportService.findById(airportId);
-        return airport;
+        return assembler.toResource(airport);
     }
 
     @PostMapping(path = "/",consumes = MediaType.APPLICATION_JSON, produces=MediaType.APPLICATION_JSON)

@@ -28,7 +28,7 @@ public class UserResourceController {
     }
 
     @GetMapping(path = "/{user_id}", produces = MediaType.APPLICATION_JSON)
-    public User getRegistrationById(@PathVariable("user_id") int userId){
+    public User getUserById(@PathVariable("user_id") int userId){
         User user = userService.findById(userId);
         return user;
     }
