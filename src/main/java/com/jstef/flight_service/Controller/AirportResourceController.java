@@ -9,6 +9,7 @@ import com.jstef.flight_service.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.GET;
@@ -16,6 +17,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,30 +52,32 @@ public class AirportResourceController {
     }
 
     @PostMapping(path = "/",consumes = MediaType.APPLICATION_JSON, produces=MediaType.APPLICATION_JSON)
-    public Airport addNewAirport(@RequestBody Airport airport){
-        if(airport==null) return new Airport();
+    public ResponseEntity<?> addNewAirport(@RequestBody Airport airport) throws URISyntaxException {
         airport.setId(0);
         airportService.save(airport);
-        return airport;
+        Resource<Airport> airportResource = assembler.toResource(airport);
+        return ResponseEntity.created(new URI(airportResource.getId().expand().getHref())).body(airportResource);
     }
 
     @PutMapping(path = "/{airport_id}",consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public Airport modifyAirport(@PathVariable("airport_id") int airportId, @RequestBody Airport airport) {
+    public ResponseEntity<?> modifyAirport(@PathVariable("airport_id") int airportId, @RequestBody Airport airport) throws URISyntaxException {
         Airport airportFromDB = airportService.findById(airportId);
         if(airportFromDB==null){
-            airport.setId(0);
+            airport.setId(airportId);
             airportService.save(airport);
-            return airport;
+            Resource<Airport>airportResource=assembler.toResource(airport);
+            return ResponseEntity.created(new URI(airportResource.getId().expand().getHref())).body(airportResource);
         }
         airportFromDB.copyProperties(airport);
+        airportFromDB.setId(airportId);
         airportService.save(airportFromDB);
-        return airportFromDB;
+        Resource<Airport>airportResource=assembler.toResource(airportFromDB);
+        return ResponseEntity.created(new URI(airportResource.getId().expand().getHref())).body(airportResource);
     }
 
     @DeleteMapping(path="/{airport_id}", produces = MediaType.APPLICATION_JSON)
-    public String deleteAirport(@PathVariable("airport_id") int airportId){
+    public ResponseEntity<?> deleteAirport(@PathVariable("airport_id") int airportId){
         airportService.deleteById(airportId);
-        return "success";
+        return ResponseEntity.noContent().build();
     }
-
 }
