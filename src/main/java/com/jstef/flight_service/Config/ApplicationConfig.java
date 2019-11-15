@@ -35,16 +35,16 @@ public class ApplicationConfig {
         ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
 
         try {
-            securityDataSource.setDriverClass("com.mysql.jdbc.Driver");
+            securityDataSource.setDriverClass("spring.datasource.driverClassName");
         }
         catch (PropertyVetoException exc) {
             throw new RuntimeException(exc);
         }
         // set database connection properties, make sure to fill application
         //properties with valid ones
-        securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-        securityDataSource.setUser(env.getProperty("jdbc.user"));
-        securityDataSource.setPassword(env.getProperty("jdbc.password"));
+        securityDataSource.setJdbcUrl(env.getProperty("spring.datasource.url"));
+        securityDataSource.setUser(env.getProperty("spring.datasource.username"));
+        securityDataSource.setPassword(env.getProperty("spring.datasource.password"));
 
         // connection pool
         securityDataSource.setInitialPoolSize(
