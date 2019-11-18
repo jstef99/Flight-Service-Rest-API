@@ -2,7 +2,7 @@ package com.jstef.flight_service.Service;
 
 import com.jstef.flight_service.Entity.Role;
 import com.jstef.flight_service.Entity.User;
-import com.jstef.flight_service.Repository.UserRepository;
+import com.jstef.flight_service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

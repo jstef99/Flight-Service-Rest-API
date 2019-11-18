@@ -1,4 +1,4 @@
-package com.jstef.flight_service.Repository;
+package com.jstef.flight_service;
 
 import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
@@ -16,4 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight,Integer> {
     List<Flight> findAllWithDepartureTimeAndDeparturePlaceAndDestination(@Param("departureTime") Date departureTime,
                                                                               @Param("departurePlace") Airport departurePlace,
                                                                               @Param("destination") Airport destination);
+
+    @Query("select a from Flight a where a.departureTime >= :departureTime")
+    List<Flight> findAllWithDepartureTime(@Param("departureTime") Date departureTime);
 }

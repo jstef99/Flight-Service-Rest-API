@@ -48,6 +48,9 @@ public class Flight {
     public Flight(){
         currPassengers=0;
     }
+    public Flight(int id){
+        this.id = id;
+    }
     public Flight(Airport departurePlace, Airport destination, DateTime departureTime, DateTime arrivalTime, int maxPassengers,
                   float nPrice, float dPrice) throws ParseException {
         currPassengers=0;
@@ -58,6 +61,16 @@ public class Flight {
         this.maxPassengers=maxPassengers;
         Seconds diff = Seconds.secondsBetween(departureTime,arrivalTime);
         this.duration = diff.getSeconds()/60;
+    }
+
+    public Flight(int id, int maxPassengers, int currPassengers){
+        this.id = id;
+        this.maxPassengers = maxPassengers;
+        this.currPassengers = currPassengers;
+    }
+
+    public Flight(DateTime departureTime){
+        this.departureTime=departureTime.toDate();
     }
 
     public void copyProperties(Flight flight) {

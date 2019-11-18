@@ -1,4 +1,4 @@
-package com.jstef.flight_service.Repository;
+package com.jstef.flight_service;
 
 import com.jstef.flight_service.Entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
