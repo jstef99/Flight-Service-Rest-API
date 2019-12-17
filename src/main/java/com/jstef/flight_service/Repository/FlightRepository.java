@@ -1,4 +1,4 @@
-package com.jstef.flight_service;
+package com.jstef.flight_service.Repository;
 
 import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;

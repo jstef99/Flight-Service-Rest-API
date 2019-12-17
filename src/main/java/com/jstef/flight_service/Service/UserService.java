@@ -2,7 +2,7 @@ package com.jstef.flight_service.Service;
 
 import com.jstef.flight_service.Entity.Role;
 import com.jstef.flight_service.Entity.User;
-import com.jstef.flight_service.UserRepository;
+import com.jstef.flight_service.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

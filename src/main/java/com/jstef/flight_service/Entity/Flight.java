@@ -11,10 +11,7 @@ import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Entity
 @Data
@@ -27,6 +24,30 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name="departure_airport_id")
     private Airport departurePlace;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return id == flight.id &&
+                duration == flight.duration &&
+                maxPassengers == flight.maxPassengers &&
+                currPassengers == flight.currPassengers &&
+                Float.compare(flight.nPrice, nPrice) == 0 &&
+                Float.compare(flight.dPrice, dPrice) == 0 &&
+                Objects.equals(departurePlace, flight.departurePlace) &&
+                Objects.equals(destination, flight.destination) &&
+                Objects.equals(departureTime, flight.departureTime) &&
+                Objects.equals(arrivalTime, flight.arrivalTime) &&
+                Objects.equals(registrations, flight.registrations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, departurePlace, destination, duration, departureTime, arrivalTime, maxPassengers, currPassengers, registrations, nPrice, dPrice);
+    }
+
     @ManyToOne
     @JoinColumn(name="destination_airport_id")
     private Airport destination;

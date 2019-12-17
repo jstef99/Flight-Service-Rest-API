@@ -1,7 +1,6 @@
 package com.jstef.flight_service.Repository;
 
 import com.jstef.flight_service.Entity.User;
-import com.jstef.flight_service.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -23,16 +22,18 @@ public class UserJPATestClass {
 	private UserRepository userRepository;
 
 	@Test
-	public void findByLoginTest() {
+	public void shouldFindUserForFindByLogin() {
 		User user = new User("John","Smith","jsmith","jsmith@gmail.com","fancy");
 		manager.persist(user);
 		manager.flush();
 		User desired = userRepository.findByLogin(user.getLogin());
-		assertEquals(user.getFirstName(),desired.getFirstName());
-		assertEquals(user.getLastName(),desired.getLastName());
-		assertEquals(user.getLogin(),desired.getLogin());
-		assertEquals(user.getEmail(),desired.getEmail());
-		assertEquals(user.getPassword(),desired.getPassword());
+		assertEquals(user,desired);
+	}
+
+	@Test
+	public void shouldReturnNoResultForInvalidLogin(){
+		User user = userRepository.findByLogin("not-existing");
+		assertNull(user);
 	}
 
 }

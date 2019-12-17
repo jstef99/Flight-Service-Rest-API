@@ -3,7 +3,7 @@ package com.jstef.flight_service.Service;
 import com.jstef.flight_service.Entity.Airport;
 import com.jstef.flight_service.Entity.Flight;
 import com.jstef.flight_service.Entity.Registration;
-import com.jstef.flight_service.FlightRepository;
+import com.jstef.flight_service.Repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

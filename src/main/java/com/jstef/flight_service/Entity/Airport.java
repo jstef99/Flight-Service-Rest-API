@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -16,6 +17,23 @@ public class Airport {
     private int id;
 
     private String country;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Airport airport = (Airport) o;
+        return id == airport.id &&
+                Objects.equals(country, airport.country) &&
+                Objects.equals(airportName, airport.airportName) &&
+                Objects.equals(departures, airport.departures) &&
+                Objects.equals(arrivals, airport.arrivals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, airportName, departures, arrivals);
+    }
 
     private String airportName;
 

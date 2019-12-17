@@ -1,7 +1,7 @@
 package com.jstef.flight_service.Service;
 
 import com.jstef.flight_service.Entity.Registration;
-import com.jstef.flight_service.RegistrationRepository;
+import com.jstef.flight_service.Repository.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
